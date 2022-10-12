@@ -1,0 +1,66 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 mt-2 mx-auto" style="height: 85vh;">
+        <div>
+            <h2 class="mt-5 text-primary fs-2 fw-bold">Consums</h2>
+        </div>
+        <div style="height: 95%;" class="mt-2 overflow-auto">
+            <form autocomplete="off" [formGroup]="myForm">
+                <div class="form-group">
+                    <label class="col-form-label">Codi de barres:</label>
+                    <input type="text" formControlName="codBarras" class="form-control" (input)="actCamposCodBarras()">
+                    <span class="form-text text-danger" *ngIf="campoEsValido('codBarras')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-5 col-form-label">Partida/Cad:</label>
+                    <input type="text" formControlName="partida" class="form-control">
+                    <span class="form-text text-danger" *ngIf="campoEsValido('partida')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+                <div class="d-flex">
+                    <div class="form-group col-5">
+                        <label class="col-form-label">Bobines</label>
+                        <input type="number" formControlName="bobinas" class="form-control">
+                        <span class="form-text text-danger" *ngIf="campoEsValido('bobinas')">
+                            Camp obligatori
+                        </span>
+                    </div>
+
+                    <div class="form-group col-5 ms-auto">
+                        <label class="col-3 col-form-label">Pes:</label>
+                        <input type="number" formControlName="peso" class="form-control" max="{{ pesoMax }}" min="0">
+                        <span class="form-text text-danger" *ngIf="campoEsValido('peso')">
+                            Camp obligatori.
+                        </span>
+                        <br>
+                        <span class="form-text text-danger" *ngIf="campoPeso()">
+                            Ha excedido el peso máximo del bulto..
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label">Magatzem:</label>
+                    <select class="form-select" formControlName="almacen">
+                        <option value="">Seleccioneu..</option>
+                        <option *ngFor="let item of listaAlmacenes" value="{{ item }}">{{
+                            item }} </option>
+                    </select>
+                    <span class="form-text text-danger" *ngIf="campoEsValido('almacen')">
+                        Camp obligatori
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-transparent text-success fs-1 fw-bold" [disabled]="myForm.invalid"
+                (click)="setLineaConsumos()" [routerLink]="['../consums']"><i class="bi bi-check-circle"></i></button>
+            <button class="btn btn-transparent text-danger fs-1 fw-bold" [routerLink]="['../consums']"><i
+                    class="bi bi-x-circle"></i></button>
+        </div>
+    </div>
+</div>

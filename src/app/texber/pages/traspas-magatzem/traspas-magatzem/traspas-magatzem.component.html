@@ -1,0 +1,105 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 mt-2 mx-auto" style="height: 85vh;">
+        <div>
+            <h2 class="mt-5 text-primary fs-2 fw-bold">Traspas Magatzem</h2>
+        </div>
+
+
+        <div class="mt-4 mb-2">
+            <div *ngIf="respuesta != ''">
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <strong>{{ respuesta }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <div *ngIf="datosTraspaso.datosEstablecidos == 0; else divDatosTraspaso">
+                <form autocomplete="off" [formGroup]="myForm">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label class="col-form-label">Magatzem:</label>
+                        </div>
+
+                        <div class="d-flex gap-1 col-8">
+                            <div class="col-6">
+                                <label class="col-form-label">Origen</label>
+                                <select class="form-select" formControlName="almacenOrigen">
+                                    <option value="">Seleccioneu..</option>
+                                    <option *ngFor="let item of listaAlmacenes" [value]="item.codigoAlmacen">{{
+                                        item.codigoAlmacen
+                                        }} </option>
+                                </select>
+                                <span class="form-text text-danger" *ngIf="campoEsValido('almacenOrigen')">
+                                    Camp obligatori
+                                </span>
+                            </div>
+
+                            <div class="col-6">
+                                <label class="col-form-label text-center">Destino</label>
+                                <select class="form-select" formControlName="almacenDestino">
+                                    <option value="">Seleccioneu..</option>
+                                    <option *ngFor="let item of listaAlmacenes" [value]="item.codigoAlmacen">{{
+                                        item.codigoAlmacen
+                                        }} </option>
+                                </select>
+                                <span class="form-text text-danger" *ngIf="campoEsValido('almacenDestino')">
+                                    Camp obligatori
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Serie doc.:</label>
+                        <input type="text" formControlName="serieDoc" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <ng-template #divDatosTraspaso>
+                <div style="height: 20vh;" class="d-flex justify-content-between">
+                    <p class="fs-6 fw-bold"><span class="text-primary fw-semibold">Almacén origen: </span>{{
+                        datosTraspaso.almacenOrigen }}
+                    </p>
+                    <p class="fs-6 fw-bold"><span class="text-primary fw-semibold">Almacén destino: </span>{{
+                        datosTraspaso.almacenDestino }}
+                    </p>
+                </div>
+            </ng-template>
+
+        </div>
+
+        <div style="height: 60%;" class="mt-2 overflow-auto pe-3">
+            <div *ngFor="let item of lineasMovimientoStock; let i = index" (click)="seleccionarLinea(i, item)"
+                class="py-2 px-2 mb-2 text-light" [ngClass]="lineaMovimientoStock == item ? 'bg-danger' : 'bg-primary'">
+                <div class="d-flex justify-content-between align-items-center"><span>{{ item.codigoArticulo
+                        }}</span><span>{{
+                        item.partida }}</span></div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex">
+                        <span>{{ item.unidades }}</span>
+                    </div>
+                    <span>{{ item.codigoAlmacen }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mb-2 d-flex align-items-center">
+            <div class="d-flex">
+                <button class="text-success btn btn-transparent fw-bold fs-2"
+                    [disabled]="myForm.invalid && datosTraspaso.datosEstablecidos == 0" (click)="setDatosTraspaso()"
+                    [routerLink]="['../traspasmagatzembis']"><i class="bi bi-plus-circle-fill"></i>
+                </button>
+                <button class="mx-4 text-danger btn btn-transparent fw-bold fs-2" (click)="borrarLinea()"
+                    [disabled]="!seleccionada"><i class="bi bi-dash-circle-fill"></i></button>
+            </div>
+            <div class="ms-auto"><span class="fw-bold fs-4 me-4">Embalum:</span><span class="fw-bold fs-4 me-4">0</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-transparent text-success fs-1 fw-bold" [disabled]="lineasMovimientoStock.length == 0"
+                (click)="setMovimientosStock()"><i class="bi bi-check-circle"></i></button>
+            <button class="btn btn-transparent text-danger fs-1 fw-bold" [routerLink]="['../../home']"
+                (click)="borrarDatosTraspaso()"><i class="bi bi-x-circle"></i></button>
+        </div>
+    </div>
+</div>

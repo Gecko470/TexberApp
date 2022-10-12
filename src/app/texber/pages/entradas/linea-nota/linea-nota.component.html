@@ -1,0 +1,90 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 my-5 mx-auto" style="height: 85vh;">
+
+        <h2 class="mt-5 text-primary fs-2 fw-bold">Línia de Nota</h2>
+
+        <div class="mt-5 mb-2">
+            <form autocomplete="off" [formGroup]="myForm">
+                <div class="form-group">
+                    <label class="col-3 col-form-label">Codi:</label>
+                    <select class="form-select" formControlName="codigoArticulo" (change)="seleccionarArticulo()">
+                        <option value="">Seleccioneu..</option>
+                        <option *ngFor="let item of listaArticulos" [value]="item.codigoArticulo">{{
+                            item.descripcionArticulo
+                            }}
+                        </option>
+                    </select>
+                    <span class="form-text text-danger" *ngIf="campoEsValido('codigoArticulo')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-3 col-form-label">Magatzem</label>
+                    <select class="form-select" formControlName="codigoAlmacen">
+                        <option value="">Seleccioneu..</option>
+                        <option *ngFor="let item of listaAlmacenes" [value]="item.codigoAlmacen">{{ item.codigoAlmacen
+                            }}
+                        </option>
+                    </select>
+                    <span class="form-text text-danger" *ngIf="campoAlmacen()">
+                        Camp obligatori
+                    </span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-3 col-form-label">Partida:</label>
+                    <input type="text" formControlName="partida" class="form-control">
+                    <span class="form-text text-danger" *ngIf="campoEsValido('partida')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-4 col-form-label">Num. Embalum:</label>
+                    <input type="text" formControlName="bulto" class="form-control">
+                    <span class="form-text text-danger" *ngIf="campoEsValido('bulto')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="col-3 col-form-label">Bobines:</label>
+                    <input type="number" min="0" formControlName="bobinas" class="form-control">
+                    <span class="form-text text-danger" *ngIf="campoEsValido('bobinas')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-3 col-form-label">Pes:</label>
+                    <input type="number" min="0" formControlName="peso" class="form-control">
+                    <span class="form-text text-danger" *ngIf="campoEsValido('peso')">
+                        Camp obligatori
+                    </span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-3 col-form-label">Observacions:</label>
+                    <textarea formControlName="observaciones" class="form-control"></textarea>
+                </div>
+            </form>
+        </div>
+        <div style="height: 5%;"></div>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-transparent text-success fs-1 fw-bold" [disabled]="myForm.invalid || campoAlmacen()"
+                (click)="setLineaAlbProv()" [routerLink]="['../gestionNota']"><i
+                    class="bi bi-check-circle"></i></button>
+            <button class="btn btn-transparent text-danger fs-1 fw-bold"
+                [routerLink]="['../gestionNota', datosEntrada.codCliente]"><i class="bi bi-x-circle"></i></button>
+        </div>
+    </div>
+
+</div>

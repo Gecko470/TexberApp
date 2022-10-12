@@ -1,0 +1,49 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 mt-5 mx-auto" style="height: 95vh;">
+
+        <h2 class="mt-5 text-primary fs-2 fw-bold">Stock Productes</h2>
+
+        <div class="mt-5">
+            <form autocomplete="off" [formGroup]="myForm">
+                <div class="form-group">
+                    <label class="col-6 col-form-label">Codi de Barres:</label>
+                    <div class="d-flex">
+                        <input type="text" formControlName="codBarras" class="form-control">
+                        <button (click)="buscarStock()" class="btn btn-primary fw-bold mx-1"
+                            [disabled]="campoEsValido('codBarras')"><i class="bi bi-search"></i></button>
+                    </div>
+
+                    <span class="form-text text-danger" *ngIf="campoEsValido('codBarras')">
+                        Camp obligatori
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div *ngIf="respuesta" class="mt-5">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ respuesta }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <div style="height: 60%;" class="overflow-auto my-3">
+            <div *ngFor="let item of stockProducto" class="bg-primary text-light my-2 p-2">
+                <div class="d-flex justify-content-between">
+                    <div>{{ item.codigoArticulo }}</div>
+                    <div>{{ item.codigoAlmacen }}</div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>{{ item.partida}}</div>
+                    <div>{{ item.unidadSaldo }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end fw-bold">
+            <p>Embalums: {{ stockProducto.length }}</p>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-transparent"><a [routerLink]="['../../home']" class="text-danger fs-1 fw-bold"><i
+                        class="bi bi-x-circle"></i></a></button>
+        </div>
+    </div>
+</div>

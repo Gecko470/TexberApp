@@ -1,0 +1,118 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 mt-2 mx-auto" style="height: 85vh;">
+        <div>
+            <h2 class="mt-5 text-primary fs-2 fw-bold">Producció</h2>
+        </div>
+        <div *ngIf="respuesta">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>{{ respuesta }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <form autocomplete="off" [formGroup]="myForm">
+            <div class="form-group">
+                <label class="col-form-label">Línies:</label>
+                <select class="form-select" formControlName="codLinea" (change)="buscarOrdenesFab()">
+                    <option value="">Seleccioneu..</option>
+                    <option *ngFor="let item of listaLineas" [value]="item.coCodigoLinea">{{
+                        item.coCodigoLinea }} </option>
+                </select>
+                <span class="form-text text-danger" *ngIf="campoEsValido('codLinea')">
+                    Camp obligatori
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label">Ordenes:</label>
+                <select class="form-select" formControlName="ordenFab" (change)="buscarLineasOrdenFab()">
+                    <option value="">Seleccioneu..</option>
+                    <option *ngFor="let item of listaOrdenesFab" [value]="item">{{
+                        item }} </option>
+                </select>
+                <span class="form-text text-danger" *ngIf="campoEsValido('ordenFab')">
+                    Camp obligatori
+                </span>
+            </div>
+        </form>
+
+        <div style="height: 70%;" class="mt-4 overflow-auto">
+            <div *ngFor="let item of listaLineasOrdenFabMp; let i = index" class="text-light my-2 p-2"
+                [ngClass]="varControlMp > i ? 'bg-secondary':'bg-primary'">
+                <form autocomplete="off">
+                    <div class="fw-semibold fs-5">Materia Prima</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>{{ item.codigoArticulo }}</span>
+                        <span>{{ item.partida }}</span>
+                    </div>
+                    <div>Cant. Asignada: {{ item.unidades }}</div>
+                    <div class="d-flex justify-content-between align-items-top">
+                        <div class="form-group col-5"><label class="col-form-label">Cant. Sobrante: </label><input
+                                class="form-control" name="cantSobrante" [(ngModel)]="cantSobrante" type="number">
+                        </div>
+                        <div>
+                            <label class="col-form-label">Magatzems:</label>
+                            <select class="form-select" name="almacen" [(ngModel)]="almacenMp">
+                                <option value="">Seleccioneu..</option>
+                                <option *ngFor="let item of listaAlmacenes" [value]="item.codigoAlmacen">{{
+                                    item.codigoAlmacen
+                                    }} </option>
+                            </select>
+                            <span class="form-text text-light" *ngIf="almacenMp == ''">
+                                Camp obligatori
+                            </span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-light text-primary fw-bold" type="button" (click)="setProduccionMp(i)"
+                            [disabled]="almacenMp == '' || varControlMp != i">Validar</button>
+                    </div>
+                </form>
+            </div>
+            <div *ngFor="let item of listaLineasOrdenFabPf; let j = index" class="text-light my-2 p-2"
+                [ngClass]="varControlPf > j ? 'bg-secondary':'bg-success'">
+                <form autocomplete="off">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="fw-semibold fs-5">Producto final</div>
+                        <span>Fibra: {{ item.coFibra }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>{{ item.codigoArticulo }}</span>
+                        <span>{{ item.partida }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="form-group col-5"><label class="col-form-label">Cant. Fabricada: </label><input
+                                class="form-control" [(ngModel)]="cantFabricada" name="cantFabricada" type="number">
+                            <span class="form-text text-light" *ngIf="cantFabricada == 0">
+                                Camp obligatori
+                            </span>
+                        </div>
+                        <div>
+                            <label class="col-form-label">Magatzems:</label>
+                            <select class="form-select" name="almacenPf" [(ngModel)]="almacenPf">
+                                <option value="">Seleccioneu..</option>
+                                <option *ngFor="let item of listaAlmacenes" [value]="item.codigoAlmacen">{{
+                                    item.codigoAlmacen
+                                    }} </option>
+                            </select>
+                            <span class="form-text text-light" *ngIf="almacenPf == ''">
+                                Camp obligatori
+                            </span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-2">
+                        <button class="btn btn-light text-success fw-bold" (click)="setProduccionPf(j)"
+                            [disabled]="cantFabricada == 0 || almacenPf == '' || varControlPf != j">Validar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <!-- <button class="btn btn-transparent text-success fs-1 fw-bold" [disabled]=""><i
+                    class="bi bi-check-circle"></i></button> -->
+            <button class="btn btn-transparent text-danger fs-1 fw-bold" [routerLink]="['../../home']"><i
+                    class="bi bi-x-circle"></i></button>
+        </div>
+    </div>
+</div>

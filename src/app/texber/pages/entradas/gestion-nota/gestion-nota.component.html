@@ -1,0 +1,84 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 my-5 mx-auto" style="height: 95vh;">
+        <div class="mt-5">
+            <h2 class="text-primary fs-2 fw-bold">Gestió de Nota</h2>
+        </div>
+
+        <div *ngIf="respuesta">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <strong>{{ respuesta }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="mt-5 d-flex justify-content-between"
+            *ngIf="datosEntrada.datosEstablecidos == 0; else divDatosEntrada">
+
+            <div class="col-auto">Detalls</div>
+            <div class="col-8">
+                <form (change)="seleccionarFibra()" [formGroup]="myForm">
+                    <div class="d-flex">
+                        <label class="col-3 col-form-label">Fibra</label>
+                        <div class="col-9">
+                            <select class="form-select" formControlName="fibra">
+                                <option value="0">Seleccioneu..</option>
+                                <option *ngFor="let item of listaFibras" [value]="item.coFibra1">{{
+                                    item.coDescFibra }}
+                                </option>
+                            </select>
+                            <span class="text-danger" *ngIf="campoEsValido('fibra')">
+                                Camp obligatori
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <ng-template #divDatosEntrada>
+            <div style="height: 15vh;" class="d-flex justify-content-between align-items-center mt-5">
+                <p class="fs-6 fw-bold"><span class="text-primary">Cod.Cliente: </span>{{ datosEntrada.codCliente }}</p>
+                <p class="fs-6 fw-bold"><span class="text-primary">Cod.Fibra: </span>{{ datosEntrada.codFibra }}</p>
+            </div>
+        </ng-template>
+
+        <div style="height: 65%;">
+            <div *ngFor="let item of lineasAlbProv; let i = index" (click)="seleccionarLinea(i, item)"
+                class="py-2 px-2 mb-2 text-light" [ngClass]="lineaAlbProvSelecc == item ? 'bg-danger' : 'bg-primary'">
+                <div class="d-flex justify-content-between align-items-center"><span>{{ item.CodigoArticulo
+                        }}</span><span>{{
+                        item.CodigoAlmacen }}</span></div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex">
+                        <span>{{ item.Partida }}</span>
+                    </div>
+                    <span>{{ item.Unidades }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mb-2 d-flex align-items-center">
+            <div class="d-flex">
+                <button (click)="postAlbProv()"
+                    [disabled]="campoEsValido('fibra') && datosEntrada.datosEstablecidos == 0"
+                    [routerLink]="['../lineaNota']" class="btn btn-transparent text-success fw-bold fs-2"><i
+                        class="bi bi-plus-circle-fill"></i>
+                </button>
+                <button class="mx-4 text-danger btn btn-transparent fw-bold fs-2" [disabled]="!seleccionada"
+                    (click)="borrarLinea()"><i class="bi bi-dash-circle-fill"></i></button>
+            </div>
+            <div class="ms-auto"><span class="fw-bold fs-4 me-4">Embalum:</span><span class="fw-bold fs-4 me-4">{{
+                    lineasAlbProv.length }}</span>
+            </div>
+        </div>
+        <div>
+            <div class="d-flex justify-content-between">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-transparent text-success fs-1 fw-bold"
+                    [disabled]="(campoEsValido('fibra') && lineasAlbProv.length == 0)" (click)="postLineasAlbProv()">
+                    <i class="bi bi-check-circle"></i>
+                </button>
+                <button class="btn btn-transparent"><a [routerLink]="['../listaProveedores']"
+                        class="text-danger fs-1 fw-bold"><i class="bi bi-x-circle"
+                            (click)="borrarDatosEstablecidos()"></i></a></button>
+            </div>
+        </div>
+    </div>

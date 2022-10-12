@@ -1,0 +1,36 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 my-5 mx-auto" style="height: 90vh;">
+        <div class="mt-5">
+            <h2 class="text-primary fs-2 fw-bold">Llista de proveïdors</h2>
+        </div>
+
+        <div>
+            <form (change)="seleccionarCliente()" [formGroup]="myForm">
+                <div class="form-group my-4">
+                    <label class="col-form-label">Proveïdors</label>
+                    <select class="form-select" formControlName="codigoCliente">
+                        <option value="0">Seleccioneu</option>
+                        <option *ngFor="let item of listaClientes" [value]="item.codigoCliente">{{ item.razonSocial
+                            }} </option>
+                    </select>
+                    <span class="form-text text-danger" *ngIf="campoEsValido('codigoCliente')">
+                        Camp obligatori
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div style="height: 70%;">
+
+        </div>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-transparent" [disabled]="campoEsValido('codigoCliente')">
+                <a [routerLink]="['../gestionNota']" class="text-success fs-1 fw-bold"><i
+                        class="bi bi-check-circle"></i></a>
+            </button>
+            <button class="btn btn-transparent">
+                <a (click)="navegar()" class="text-danger fs-1 fw-bold"><i class="bi bi-x-circle"></i></a>
+            </button>
+        </div>
+    </div>
+</div>

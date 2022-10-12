@@ -1,0 +1,48 @@
+<div class="container mx-auto mt-5">
+    <div class="d-flex justify-content-end">
+        <p><span class="text-primary fw-bold">Usuari: </span>{{ usuario }}</p>
+    </div>
+    <div class="d-flex flex-row justify-content-center mt-5 col-5 px-6 mx-auto">
+
+        <h1 class="fs-1"><span class="text-primary fs-2 fw-bold">TexberApp</span></h1>
+
+    </div>
+
+    <div class="col-md-3 mx-auto mt-5">
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-primary fw-bold" routerLink="../entradas">
+                <i class="bi bi-arrow-left-circle fw-bold me-1"></i> Entrades
+            </button>
+        </div>
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-primary fw-bold" [routerLink]="['../lliuraments/lliuraments', 0]">
+                <i class="bi bi-arrow-right-circle fw-bold me-1"></i> Lliuraments
+            </button>
+        </div>
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-primary fw-bold" [routerLink]="['../consums']">
+                <i class="bi bi-clipboard-data fw-bold me-1"></i> Consums
+            </button>
+        </div>
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-primary fw-bold" [routerLink]="['../produccio']">
+                <i class="bi bi-gear fw-bold me-1"></i> Produccio
+            </button>
+        </div>
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-primary fw-bold" [routerLink]="['../traspasmagatzem']">
+                <i class="bi bi-arrow-left-right fw-bold me-1"></i> Traspas Magatzem
+            </button>
+        </div>
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-primary fw-bold" [routerLink]="['../stock']">
+                <i class="bi bi-list-check fw-bold me-1"></i> Stock
+            </button>
+        </div>
+        <div class="my-4 d-grid">
+            <button class="btn btn-outline-danger fw-bold" (click)="logout()">
+                <i class="bi bi-box-arrow-right fw-bold me-1"></i> Sortir
+            </button>
+        </div>
+    </div>
+</div>

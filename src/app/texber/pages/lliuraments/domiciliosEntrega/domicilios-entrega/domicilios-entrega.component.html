@@ -1,0 +1,34 @@
+<div class="container mx-auto mt-5">
+
+    <div class="col-md-6 mt-2 mx-auto" style="height: 85vh;">
+        <div>
+            <h2 class="my-5 text-primary fs-2 fw-bold">Domicilis Enviament</h2>
+        </div>
+
+        <div>
+            <form [formGroup]="myForm">
+                <div class="form-group d-flex">
+                    <label class="col-4 col-form-label">Sèrie Albarà:</label>
+                    <input type="text" formControlName="serieAlb" class="form-control">
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-5 mb-2 overflow-auto" style="height: 80%;">
+            <div *ngFor="let item of listaDomicilios" class="border border-primary rounded text-primary mb-3 px-3"
+                [ngClass]="domicilioSeleccionado == item ? 'bg-primary text-light' : ''"
+                (click)="seleccionarDomicilio(item)">
+                <div>{{ item.razonSocial }}</div>
+                <div>Tipo Domicilio: {{ item.tipoDomicilio }}</div>
+                <div>{{ item.domicilio1 }}</div>
+                <div>{{ item.municipio }} {{ item.nacion }}</div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button (click)="generarAlbaran()" class="btn btn-transparent text-success fs-1 fw-bold"
+                [disabled]="!valido"><i class="bi bi-check-circle"></i></button>
+            <button class="btn btn-transparent text-danger fs-1 fw-bold" [routerLink]="['../../lliuraments/0']"><i
+                    class="bi bi-x-circle"></i></button>
+        </div>
+    </div>
+</div>
